@@ -36,6 +36,17 @@ private FirebaseAuth firebaseAuth;
                 checkUser();
             }
         });
+
+
+
+        binding.addCat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardAdminActivity.this,AddCategoryBooks.class));
+                finish();
+            }
+        });
+
     }
     private void checkUser() {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
