@@ -2,10 +2,14 @@ package com.codeeraayush.ilibrary;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codeeraayush.ilibrary.databinding.ActivityDashboardAdminBinding;
 import com.codeeraayush.ilibrary.databinding.ActivityDashboardBinding;
@@ -44,6 +48,30 @@ private FirebaseAuth firebaseAuth;
         checkUser();
 
         loadCategories();
+
+        //realtime searching
+        binding.searchBtn.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+//calls when user changes the letters
+                try {
+                    adapterCategory.getFilter().filter(charSequence);
+                }catch (Exception e){
+                    Toast.makeText(DashboardAdminActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         //logout btn
         binding.logoutBtnAdmin.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +114,7 @@ private FirebaseAuth firebaseAuth;
             adapterCategory=new AdapterCategory(DashboardAdminActivity.this,categoryArrayList);
             //setup adapter
             binding.reCat.setAdapter(adapterCategory);
+            binding.reCat.setLayoutManager(new LinearLayoutManager(DashboardAdminActivity.this));
         }
 
         @Override
