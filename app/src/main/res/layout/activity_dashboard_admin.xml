@@ -51,10 +51,10 @@
         android:text="+ Add Category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.248"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.953" />
+        app:layout_constraintVertical_bias="0.95" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reCat"
@@ -84,4 +84,17 @@
         app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailAdmin" />
+
+    <ImageView
+        android:id="@+id/addPdfBtn"
+        android:layout_width="85dp"
+        android:layout_height="58dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toEndOf="@+id/addCat"
+        app:layout_constraintTop_toBottomOf="@+id/reCat"
+        app:layout_constraintVertical_bias="0.65"
+        app:srcCompat="@drawable/pdf_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

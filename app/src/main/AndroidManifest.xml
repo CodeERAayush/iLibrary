@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ILibrary">
         <activity
+            android:name=".pdfAddActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddCategoryBooks"
             android:exported="false" />
         <activity

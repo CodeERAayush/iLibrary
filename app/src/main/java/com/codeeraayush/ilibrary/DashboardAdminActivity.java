@@ -49,6 +49,16 @@ private FirebaseAuth firebaseAuth;
 
         loadCategories();
 
+
+        //add pdf btn
+        binding.addPdfBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DashboardAdminActivity.this,pdfAddActivity.class));
+            }
+        });
+
+
         //realtime searching
         binding.searchBtn.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,7 +98,6 @@ private FirebaseAuth firebaseAuth;
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(DashboardAdminActivity.this,AddCategoryBooks.class));
-                finish();
             }
         });
 
