@@ -19,7 +19,6 @@ import com.codeeraayush.ilibrary.databinding.ActivityPdfAddBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +29,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,7 +46,8 @@ private ActivityPdfAddBinding binding;
     private ProgressDialog progressDialog;
 
     //arrayList to store pdf categories
-    private ArrayList<ModelCategory> cat;
+    private ArrayList<String> categoryTitleArrayList,categoryIdArrayList;
+
 
     private Uri pdf_uri=null;
 
@@ -100,16 +99,15 @@ private ActivityPdfAddBinding binding;
         });
 
     }
-String title="",category="",description="";
+String title="",description="";
     private void validateData() {
 title=binding.titleBk.getText().toString().trim();
-category=binding.categorySel.getText().toString().trim();
 description=binding.desBk.getText().toString().trim();
 
 //validation
         if(TextUtils.isEmpty(title))binding.titleBk.setError("Enter Title of the Book!");
         else if(TextUtils.isEmpty(description))binding.desBk.setError("Enter Book description!");
-        else if(TextUtils.isEmpty(category))binding.categorySel.setError("Please Select Category First!");
+        else if(TextUtils.isEmpty(selectedCategoryTitle))binding.categorySel.setError("Please Select Category First!");
         else if(pdf_uri==null) Toast.makeText(pdfAddActivity.this, "Please select a Pdf file", Toast.LENGTH_SHORT).show();
         else{
             uploadToStorage();
@@ -163,6 +161,7 @@ description=binding.desBk.getText().toString().trim();
         hashMap.put("id",""+timeStamp);
         hashMap.put("title",""+title);
         hashMap.put("description",""+description);
+        hashMap.put("categoryId",""+selectedcategoryId);
         hashMap.put("url",""+pdfUrl);
         hashMap.put("timestamp",timeStamp);
 
@@ -190,16 +189,23 @@ description=binding.desBk.getText().toString().trim();
         Log.d(TAG, "loadPdfCategories: Loading pdf categories...");
 
         //initialising arraylist
-        cat=new ArrayList<>();
-
+        categoryTitleArrayList =new ArrayList<>();
+        categoryIdArrayList=new ArrayList<>();
         //setting db ref to load categories
         DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Categories");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                categoryTitleArrayList.clear();
+                categoryTitleArrayList.clear();
                 for(DataSnapshot sn:snapshot.getChildren()){
-                    ModelCategory modelCategory=sn.getValue(ModelCategory.class);
-                    cat.add(modelCategory);
+                    String categoryId=""+sn.child("id").getValue();
+                    String categoryTitle=""+sn.child("category").getValue();
+
+
+                    categoryTitleArrayList.add(categoryTitle);
+                    categoryIdArrayList.add(categoryId);
+
                 }
             }
 
@@ -209,12 +215,14 @@ description=binding.desBk.getText().toString().trim();
             }
         });
     }
+//select category id and Title
+    private String selectedcategoryId="",selectedCategoryTitle="";
 
     private void selectCategory() {
 
-        String cateArray[]=new String[cat.size()];
-        for(int i=0;i<cat.size();i++){
-            cateArray[i]=cat.get(i).getCategory();
+        String cateArray[]=new String[categoryTitleArrayList.size()];
+        for(int i = 0; i< categoryTitleArrayList.size(); i++){
+            cateArray[i]= categoryTitleArrayList.get(i);
         }
 
         //Alert dialogue to choose between each category
@@ -224,10 +232,13 @@ description=binding.desBk.getText().toString().trim();
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //handle item clicked
-                        //get clicked item from dialogue list
-                        String category=cateArray[i];
+                        //get clicked item from dialogue list]
+
+                        selectedcategoryId=categoryIdArrayList.get(i);
+                        selectedCategoryTitle=categoryTitleArrayList.get(i);
+
                         //set to category textview
-                        binding.categorySel.setText(category);
+                        binding.categorySel.setText(selectedCategoryTitle);
 
                     }
                 })

@@ -1,11 +1,9 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.adapters;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.ColorSpace;
-import android.provider.ContactsContract;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +15,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewbinding.ViewBinding;
 
+import com.codeeraayush.ilibrary.PdfListAdmin;
+import com.codeeraayush.ilibrary.filters.FilterCategory;
+import com.codeeraayush.ilibrary.models.ModelCategory;
 import com.codeeraayush.ilibrary.databinding.RowCategoryBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.HolderCategory> implements Filterable {
 private Context context;
@@ -62,6 +61,11 @@ private RowCategoryBinding binding;
 long timestamp=model.getTimestamp();
         //set data
         holder.categoryTv.setText(category);
+
+
+
+
+
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +90,24 @@ long timestamp=model.getTimestamp();
             }
 
         });
+
+
+
+        //handle item click to go to pdfListAdmin activity , also pass pdf category and category id
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, PdfListAdmin.class);
+                intent.putExtra("categoryId",id)
+                        .putExtra("category",category);
+                context.startActivity(intent);
+            }
+        });
+
+
     }
+
+
 
     private void deleteCategory(ModelCategory model, HolderCategory holder) {
         String id=model.getId();

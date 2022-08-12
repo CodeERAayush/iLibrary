@@ -1,4 +1,4 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.models;
 
 public class ModelCategory {
     String id,category,uid;

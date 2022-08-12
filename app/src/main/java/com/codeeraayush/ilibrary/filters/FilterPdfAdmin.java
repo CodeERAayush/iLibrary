@@ -1,19 +1,23 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.filters;
 
 import android.widget.Filter;
 
+import com.codeeraayush.ilibrary.adapters.AdapterCategory;
+import com.codeeraayush.ilibrary.adapters.AdapterPdfAdmin;
+import com.codeeraayush.ilibrary.models.ModelCategory;
+import com.codeeraayush.ilibrary.models.ModelPdf;
+
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class FilterCategory extends Filter {
+public class FilterPdfAdmin extends Filter {
     //arrayList in which we want to search
-    ArrayList<ModelCategory>filterList;
+    ArrayList<ModelPdf>filterList;
     //adapter in which filter need to be implimented
-    AdapterCategory adapterCategory;
+    AdapterPdfAdmin adapterPdfAdmin;
 
-    public FilterCategory(ArrayList<ModelCategory> filterList, AdapterCategory adapterCategory) {
+    public FilterPdfAdmin(ArrayList<ModelPdf> filterList, AdapterPdfAdmin adapterPdfAdmin) {
         this.filterList = filterList;
-        this.adapterCategory = adapterCategory;
+      this.adapterPdfAdmin=adapterPdfAdmin;
     }
 
 
@@ -27,11 +31,11 @@ public class FilterCategory extends Filter {
             charSequence=charSequence.toString().toUpperCase();
 
 
-            ArrayList<ModelCategory>filtered=new ArrayList<>();
+            ArrayList<ModelPdf> filtered=new ArrayList<>();
             for(int i=0;i<filterList.size();i++){
 
                 //validate
-                if(filterList.get(i).getCategory().toUpperCase().contains(charSequence)){
+                if(filterList.get(i).getTitle().toUpperCase().contains(charSequence)){
                     filtered.add(filterList.get(i));
                 }
             }
@@ -48,9 +52,9 @@ public class FilterCategory extends Filter {
     @Override
     protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
 //apply changes
-        adapterCategory.categoryArrayList=(ArrayList<ModelCategory>) filterResults.values;
+        adapterPdfAdmin.pdfArrayList=(ArrayList<ModelPdf>) filterResults.values;
 
         //notify changes
-        adapterCategory.notifyDataSetChanged();
+        adapterPdfAdmin.notifyDataSetChanged();
     }
 }
