@@ -216,7 +216,7 @@ description=binding.desBk.getText().toString().trim();
         });
     }
 //select category id and Title
-    private String selectedcategoryId="",selectedCategoryTitle="";
+    private String selectedcategoryId,selectedCategoryTitle;
 
     private void selectCategory() {
 
@@ -239,6 +239,10 @@ description=binding.desBk.getText().toString().trim();
 
                         //set to category textview
                         binding.categorySel.setText(selectedCategoryTitle);
+
+
+                        //log
+                        Log.d(TAG, "onClick: Selected Category"+selectedcategoryId+" "+selectedCategoryTitle);
 
                     }
                 })

@@ -25,7 +25,7 @@ public class PdfListAdmin extends AppCompatActivity {
 
     private ArrayList<ModelPdf> pdfArr;
 
-    AdapterPdfAdmin adapterPdfAdmin;
+    private AdapterPdfAdmin adapterPdfAdmin;
     private String categoryId,categoryTitle;
 private ActivityPdfListAdminBinding binding;
     @Override
@@ -35,7 +35,7 @@ private ActivityPdfListAdminBinding binding;
         setContentView(binding.getRoot());
         Intent intent=getIntent();
         categoryId=intent.getStringExtra("categoryId");
-        categoryTitle=intent.getStringExtra("categoryTitle");
+        categoryTitle=intent.getStringExtra("category");
 
 
 

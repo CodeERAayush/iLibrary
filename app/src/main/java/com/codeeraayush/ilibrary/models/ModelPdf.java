@@ -7,6 +7,13 @@ private long timeStamp;
 
     //constructor
 
+    //empty constructor
+    public ModelPdf(){
+
+    }
+
+
+
     public ModelPdf(String uid, String id, String title, String description, String categoryId, String url, long timeStamp) {
         this.uid = uid;
         this.id = id;

@@ -3,7 +3,11 @@ package com.codeeraayush.ilibrary.adapters;
 import static android.content.ContentValues.TAG;
 import static com.codeeraayush.ilibrary.Constants.MAX_SIZE_PDF;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codeeraayush.ilibrary.MyApplication;
+import com.codeeraayush.ilibrary.PdfEditActivity;
 import com.codeeraayush.ilibrary.databinding.PdfRowAdminBinding;
 import com.codeeraayush.ilibrary.filters.FilterPdfAdmin;
 import com.codeeraayush.ilibrary.models.ModelPdf;
@@ -50,11 +55,22 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
     public ArrayList<ModelPdf>pdfArrayList,filterList;
 
 
+    private ProgressDialog progressDialog;
+
+
     //constructor
     public AdapterPdfAdmin(Context context, ArrayList<ModelPdf> pdfArrayList) {
         this.context = context;
         this.pdfArrayList = pdfArrayList;
         this.filterList=pdfArrayList;
+
+
+        //init progressDialogue
+        progressDialog=new ProgressDialog(context);
+        progressDialog.setTitle("Please Wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
+
+
     }
 
     //viewbinding for pdf_row_admin
@@ -94,14 +110,99 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
         loadCategory(model,holder);
         loadpdfFromUrl(model,holder);
         loadSize(model,holder);
-        
+
+
+        //handel click , show dialogue with options a> Edit and b>delete
+        holder.moreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moreOptionsDialogue(model,holder);
+            }
+        });
+
 
 
     }
 
+    private void moreOptionsDialogue(ModelPdf model, HolderPdfAdmin holder) {
+
+        //options to show in dialogue
+        String []options={"Edit","Delete"};
+
+//        alert Dialogue
+        AlertDialog.Builder builder =new AlertDialog.Builder(context);
+        builder.setTitle("Choose Options")
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       //handle dialogue option click
+                       if(i==0){
+                           //Edit clicked
+                           //have to make new activity for editing in the book
+                           Intent intent=new Intent(context, PdfEditActivity.class)
+                                   .putExtra("bookId",model.getId());
+                                    context.startActivity(intent);
+
+                       }else if(i==1){
+//                           del clicked
+                       deleteBook(model , holder);
+                       }
+                    }
+                })
+                .show();
+
+    }
+
+    private void deleteBook(ModelPdf model, HolderPdfAdmin holder) {
+        String bookId=model.getId();
+        String bookUrl= model.getUrl();
+        String bookTitle= model.getTitle();
+        progressDialog.setMessage("Deleting "+bookTitle);
+        progressDialog.show();
+
+        //delete from storage
+        StorageReference ref=FirebaseStorage.getInstance().getReferenceFromUrl(bookUrl);
+        ref.delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressDialog.dismiss();
+
+
+                        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("Books");
+                        databaseReference.child(bookId)
+                                .removeValue()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(context, "Book deleted Successfully", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+
+
     private void loadpdfFromUrl(ModelPdf model, HolderPdfAdmin holder) {
         String pdfUrl=model.getUrl();
-        StorageReference reference=FirebaseStorage.getInstance().getReference(pdfUrl);
+        StorageReference reference=FirebaseStorage.getInstance().getReferenceFromUrl(pdfUrl);
         reference.getBytes(MAX_SIZE_PDF)
                 .addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -162,7 +263,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -223,7 +324,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
 
             //init variables
             pdfView=binding.pdfView;
-            progressBar=binding.progressBar;
+//            progressBar=binding.progressBar;
             titleTv=binding.titleTv;
             descriptionTv=binding.descriptionTv;
             categoryTv=binding.categoryTv;

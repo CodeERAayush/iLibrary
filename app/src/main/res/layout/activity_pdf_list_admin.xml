@@ -43,15 +43,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookRv"
-        android:layout_width="416dp"
-        android:layout_height="628dp"
+        android:layout_width="389dp"
+        android:layout_height="602dp"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/searchTv"
         app:layout_constraintVertical_bias="0.947"
         tools:listitem="@layout/pdf_row_admin" />
 </androidx.constraintlayout.widget.ConstraintLayout>
