@@ -3,7 +3,7 @@ package com.codeeraayush.ilibrary.models;
 public class ModelPdf {
     //variables
 private String uid,id,title,description,categoryId,url;
-private long timeStamp;
+private long timeStamp,downloadsCount,viewsCount;
 
     //constructor
 
@@ -12,9 +12,7 @@ private long timeStamp;
 
     }
 
-
-
-    public ModelPdf(String uid, String id, String title, String description, String categoryId, String url, long timeStamp) {
+    public ModelPdf(String uid, String id, String title, String description, String categoryId, String url, long timeStamp, long downloadsCount, long viewsCount) {
         this.uid = uid;
         this.id = id;
         this.title = title;
@@ -22,7 +20,10 @@ private long timeStamp;
         this.categoryId = categoryId;
         this.url = url;
         this.timeStamp = timeStamp;
+        this.downloadsCount = downloadsCount;
+        this.viewsCount = viewsCount;
     }
+
 
 
     /*--Getters and Setters--*/
@@ -81,5 +82,21 @@ private long timeStamp;
 
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public long getDownloadsCount() {
+        return downloadsCount;
+    }
+
+    public void setDownloadsCount(long downloadsCount) {
+        this.downloadsCount = downloadsCount;
+    }
+
+    public long getViewsCount() {
+        return viewsCount;
+    }
+
+    public void setViewsCount(long viewsCount) {
+        this.viewsCount = viewsCount;
     }
 }

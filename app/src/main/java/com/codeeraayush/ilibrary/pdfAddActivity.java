@@ -155,7 +155,7 @@ description=binding.desBk.getText().toString().trim();
 
         String uid=firebaseAuth.getUid();
 
-        //Setup data to upload
+        //Setup data to upload , also add view count and download count
         HashMap<String,Object>hashMap=new HashMap<>();
         hashMap.put("uid",""+uid);
         hashMap.put("id",""+timeStamp);
@@ -164,6 +164,8 @@ description=binding.desBk.getText().toString().trim();
         hashMap.put("categoryId",""+selectedcategoryId);
         hashMap.put("url",""+pdfUrl);
         hashMap.put("timestamp",timeStamp);
+        hashMap.put("downloadsCount", 0);
+        hashMap.put("viewsCount",0);
 
         //db reference
         DatabaseReference dbref= FirebaseDatabase.getInstance().getReference("Books");
