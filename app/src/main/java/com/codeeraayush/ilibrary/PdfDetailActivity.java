@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.codeeraayush.ilibrary.databinding.ActivityPdfDetailBinding;
@@ -28,6 +29,15 @@ String bookId;
         Intent intent=getIntent();
         bookId=intent.getStringExtra("bookId");
         loadBookDetails();
+
+        binding.readTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1=new Intent(PdfDetailActivity.this,pdfViewActivity.class);
+                intent1.putExtra("bookId",bookId);
+                startActivity(intent1);
+            }
+        });
 
     }
 

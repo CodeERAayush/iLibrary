@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ILibrary">
         <activity
+            android:name=".pdfViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".PdfDetailActivity"
             android:exported="false" />
         <activity
