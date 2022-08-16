@@ -13,40 +13,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ILibrary">
         <activity
-            android:name=".pdfViewActivity"
+            android:name=".activities.pdfViewActivity"
             android:exported="false" />
         <activity
-            android:name=".PdfDetailActivity"
+            android:name=".activities.PdfDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".PdfEditActivity"
+            android:name=".activities.PdfEditActivity"
             android:exported="false" />
         <activity
-            android:name=".PdfListAdmin"
+            android:name=".activities.PdfListAdmin"
             android:exported="false" />
         <activity
-            android:name=".pdfAddActivity"
+            android:name=".activities.pdfAddActivity"
             android:exported="false" />
         <activity
-            android:name=".AddCategoryBooks"
+            android:name=".activities.AddCategoryBooks"
             android:exported="false" />
         <activity
-            android:name=".DashboardAdminActivity"
+            android:name=".activities.DashboardAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".activities.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

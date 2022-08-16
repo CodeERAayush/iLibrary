@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardElevation="0dp"
+    app:contentPadding="5dp">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/pdfUrl"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@color/orng"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+
+        >
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdfView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/titleTv"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/pdfUrl"
+        android:maxLines="1"
+        android:text="Book Title"
+
+
+        ></TextView>
+
+    <TextView
+        android:id="@+id/descriptionTv"
+        style="@style/TextAppearance.MaterialComponents.Body2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleTv"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="3dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_toEndOf="@+id/pdfUrl"
+        android:text="Book Title"
+
+
+        ></TextView>
+    <TextView
+        android:id="@+id/categoryTv"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="3dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="Category"
+
+
+        ></TextView>
+    <TextView
+        android:id="@+id/sizeTv"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="3dp"
+        android:layout_toEndOf="@+id/pdfUrl"
+        android:layout_alignParentBottom="true"
+        android:text="10 Mb"
+
+
+        ></TextView>
+    <TextView
+        android:id="@+id/dateTv"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="3dp"
+        android:layout_toEndOf="@+id/pdfUrl"
+        android:layout_toStartOf="@+id/categoryTv"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true"
+        android:text="DD/MM/YY"
+
+
+        ></TextView>
+
+
+</RelativeLayout>
+
+</androidx.cardview.widget.CardView>

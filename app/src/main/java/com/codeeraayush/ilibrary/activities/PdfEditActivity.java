@@ -1,4 +1,4 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -11,9 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import com.codeeraayush.ilibrary.databinding.ActivityPdfAddBinding;
 import com.codeeraayush.ilibrary.databinding.ActivityPdfEditBinding;
-import com.codeeraayush.ilibrary.models.ModelPdf;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 

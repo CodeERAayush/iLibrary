@@ -1,4 +1,4 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.codeeraayush.ilibrary.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +39,7 @@ firebaseAuth=FirebaseAuth.getInstance();
         FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
         if(firebaseUser==null){
             //Start new intent
-            startActivity(new Intent(SplashActivity.this,MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         }
         else{
@@ -51,7 +52,7 @@ firebaseAuth=FirebaseAuth.getInstance();
                             String userTyp=""+snapshot.child("userType").getValue();
 
                             if(userTyp.equals("user")){
-                                startActivity(new Intent(SplashActivity.this,DashboardActivity.class));
+                                startActivity(new Intent(SplashActivity.this, DashboardActivity.class));
                                 finish();
                             }
                             else if(userTyp.equals("admin")){

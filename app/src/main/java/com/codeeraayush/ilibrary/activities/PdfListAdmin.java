@@ -1,4 +1,4 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

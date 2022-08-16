@@ -1,4 +1,4 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codeeraayush.ilibrary.Constants;
 import com.codeeraayush.ilibrary.databinding.ActivityPdfViewBinding;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;

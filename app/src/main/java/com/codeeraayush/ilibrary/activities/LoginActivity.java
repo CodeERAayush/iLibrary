@@ -1,4 +1,4 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,7 +50,7 @@ private ActivityLoginBinding binding;
         binding.signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
@@ -107,12 +107,12 @@ private ActivityLoginBinding binding;
                         String userType=""+snapshot.child("userType").getValue();
                         if(userType.equals("user")){
                             //this is a simple user , open user dashboard
-                            startActivity(new Intent(LoginActivity.this,DashboardActivity.class));
+                            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                             finish();
                         }
                         else if(userType.equals("admin")){
                             //this is an admin // open admin dashboard
-                            startActivity(new Intent(LoginActivity.this,DashboardAdminActivity.class));
+                            startActivity(new Intent(LoginActivity.this, DashboardAdminActivity.class));
                             finish();
                         }
                     }

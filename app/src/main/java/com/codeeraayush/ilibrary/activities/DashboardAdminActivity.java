@@ -1,4 +1,4 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,7 +55,7 @@ private FirebaseAuth firebaseAuth;
         binding.addPdfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardAdminActivity.this,pdfAddActivity.class));
+                startActivity(new Intent(DashboardAdminActivity.this, pdfAddActivity.class));
             }
         });
 
@@ -98,7 +98,7 @@ private FirebaseAuth firebaseAuth;
         binding.addCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DashboardAdminActivity.this,AddCategoryBooks.class));
+                startActivity(new Intent(DashboardAdminActivity.this, AddCategoryBooks.class));
             }
         });
 

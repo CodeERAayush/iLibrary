@@ -1,4 +1,4 @@
-package com.codeeraayush.ilibrary;
+package com.codeeraayush.ilibrary.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codeeraayush.ilibrary.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 private EditText emailReg,passReg,confReg,nameLog;
@@ -137,7 +137,7 @@ nameLog.setError("Enter name");
                         progressDialog.dismiss();
                         Toast.makeText(RegisterActivity.this, "Account Created...", Toast.LENGTH_SHORT).show();
 
-                        startActivity(new Intent(RegisterActivity.this,DashboardActivity.class));
+                        startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
