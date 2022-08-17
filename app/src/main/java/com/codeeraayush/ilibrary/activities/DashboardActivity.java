@@ -152,7 +152,7 @@ private FirebaseAuth firebaseAuth;
 
 
 
-    public class ViewPagerAdapter extends FragmentPagerAdapter{
+    public class  ViewPagerAdapter extends FragmentPagerAdapter{
 
        private ArrayList<BooksUserFragment> fragmentsList=new ArrayList<>();
         private ArrayList<String> fragmentsTitle=new ArrayList<>();
