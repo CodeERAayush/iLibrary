@@ -23,7 +23,8 @@
         android:layout_marginTop="1dp"
 
         >
-        <com.github.barteksc.pdfviewer.PDFView
+        <ImageView
+            android:src="@drawable/readbook"
             android:id="@+id/pdfView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

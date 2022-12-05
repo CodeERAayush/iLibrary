@@ -49,7 +49,6 @@ private FirebaseAuth firebaseAuth;
         checkUser();
 
 
-
         setUpViewPagerAdapter(binding.viewPager);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
@@ -215,5 +214,10 @@ private FirebaseAuth firebaseAuth;
             binding.emailUser.setText(email);
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

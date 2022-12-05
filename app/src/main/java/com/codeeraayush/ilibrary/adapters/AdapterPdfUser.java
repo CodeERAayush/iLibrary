@@ -65,7 +65,7 @@ private PdfRowUserBinding binding;
         holder.dateTv.setText(date);
 
 
-        MyApplication.loadpdfFromUrl(""+pdfUrl,""+title, holder.pdfView);
+//        MyApplication.loadpdfFromUrl(""+pdfUrl,""+title, holder.pdfView);
         MyApplication.loadCategory(""+categoryId, holder.categoryTv);
         MyApplication.loadSize(""+pdfUrl,""+title,holder.sizeTv);
 
@@ -100,7 +100,7 @@ private PdfRowUserBinding binding;
 
     public class HolderPdfUser extends RecyclerView.ViewHolder{
             TextView titleTv,descriptionTv,sizeTv,categoryTv,dateTv;
-            PDFView pdfView;
+//            PDFView pdfView;
         public HolderPdfUser(@NonNull View itemView) {
             super(itemView);
             titleTv=binding.titleTv;
@@ -108,7 +108,7 @@ private PdfRowUserBinding binding;
             sizeTv=binding.sizeTv;
             categoryTv=binding.categoryTv;
             dateTv=binding.dateTv;
-            pdfView=binding.pdfView;
+//            pdfView=binding.pdfView;
         }
     }
 

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.codeeraayush.ilibrary.R;
+import com.codeeraayush.ilibrary.checkVerification;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -137,7 +138,7 @@ nameLog.setError("Enter name");
                         progressDialog.dismiss();
                         Toast.makeText(RegisterActivity.this, "Account Created...", Toast.LENGTH_SHORT).show();
 
-                        startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
+                        startActivity(new Intent(RegisterActivity.this, checkVerification.class));
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

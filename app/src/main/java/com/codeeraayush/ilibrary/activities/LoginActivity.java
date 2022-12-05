@@ -11,6 +11,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codeeraayush.ilibrary.checkVerification;
 import com.codeeraayush.ilibrary.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -107,7 +108,7 @@ private ActivityLoginBinding binding;
                         String userType=""+snapshot.child("userType").getValue();
                         if(userType.equals("user")){
                             //this is a simple user , open user dashboard
-                            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                            startActivity(new Intent(LoginActivity.this, checkVerification.class));
                             finish();
                         }
                         else if(userType.equals("admin")){

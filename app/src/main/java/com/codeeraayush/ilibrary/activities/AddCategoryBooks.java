@@ -27,7 +27,7 @@ private FirebaseAuth firebaseAuth;
         super.onCreate(savedInstanceState);
         binding =ActivityAddCategoryBooksBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-    firebaseAuth=FirebaseAuth.getInstance();
+        firebaseAuth=FirebaseAuth.getInstance();
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setTitle("Please wait...")

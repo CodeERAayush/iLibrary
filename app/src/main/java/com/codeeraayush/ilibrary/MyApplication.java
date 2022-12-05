@@ -6,8 +6,10 @@ import static com.codeeraayush.ilibrary.Constants.MAX_SIZE_PDF;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Environment;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -45,27 +50,24 @@ public class MyApplication extends Application {
     //created a static method to convert timestamp to dd/mm/yyyy format , so that it can be used anywhere in the project
 
 
-    public static final String formatTimestamp(long timestamp){
-        Calendar calendar=Calendar.getInstance(Locale.ENGLISH);
+    public static final String formatTimestamp(long timestamp) {
+        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(timestamp);
         // format timestamp in form of dd/mm/yy
-        String date = DateFormat.format("dd/MM/yyyy",calendar).toString();
+        String date = DateFormat.format("dd/MM/yyyy", calendar).toString();
         return date;
     }
 
 
-
-
-
     //delete book
-    public static void deleteBook(Context context,String bookId,String bookUrl,String bookTitle) {
-        ProgressDialog progressDialog=new ProgressDialog(context);
+    public static void deleteBook(Context context, String bookId, String bookUrl, String bookTitle) {
+        ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Please wait...");
-        progressDialog.setMessage("Deleting "+bookTitle);
+        progressDialog.setMessage("Deleting " + bookTitle);
         progressDialog.show();
 
         //delete from storage
-        StorageReference ref= FirebaseStorage.getInstance().getReferenceFromUrl(bookUrl);
+        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(bookUrl);
         ref.delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -73,7 +75,7 @@ public class MyApplication extends Application {
                         progressDialog.dismiss();
 
 
-                        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Books");
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Books");
                         databaseReference.child(bookId)
                                 .removeValue()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -85,7 +87,7 @@ public class MyApplication extends Application {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                     }
                                 });
@@ -96,54 +98,50 @@ public class MyApplication extends Application {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText(context, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
     }
 
 
-
-    public static void loadSize(String pdfUrl, String pdfTitle ,TextView sizeTv) {
-        String TAG="LOAD_PDF_SIZE";
+    public static void loadSize(String pdfUrl, String pdfTitle, TextView sizeTv) {
+        String TAG = "LOAD_PDF_SIZE";
         //using url we can access pdf and its size from firebase Storage
-        StorageReference ref= FirebaseStorage.getInstance().getReferenceFromUrl(pdfUrl);
+        StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(pdfUrl);
         ref.getMetadata()
                 .addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
                     @Override
                     public void onSuccess(StorageMetadata storageMetadata) {
-                        double bytes=storageMetadata.getSizeBytes();
+                        double bytes = storageMetadata.getSizeBytes();
 
                         //convert bytes to KB , MB
-                        double KB=bytes/1024;
-                        double MB=KB/1024;
-                        if(MB>=1){
-                            sizeTv.setText(String.format("%.2f",MB)+" Mb");
-                        }else if(KB>=1){
-                            sizeTv.setText(String.format("%.2f",KB)+" Kb");
-                        }
-                        else{
-                            sizeTv.setText(String.format("%.2f",bytes)+" bytes");
+                        double KB = bytes / 1024;
+                        double MB = KB / 1024;
+                        if (MB >= 1) {
+                            sizeTv.setText(String.format("%.2f", MB) + " Mb");
+                        } else if (KB >= 1) {
+                            sizeTv.setText(String.format("%.2f", KB) + " Kb");
+                        } else {
+                            sizeTv.setText(String.format("%.2f", bytes) + " bytes");
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: "+e.getMessage());
+                        Log.d(TAG, "onFailure: " + e.getMessage());
 
                     }
                 });
 
 
-
     }
 
 
-
-    public static void loadpdfFromUrl(String pdfUrl, String pdfTitle,PDFView pdfView) {
-        String TAG="LOAD_PDF_URL";
-        StorageReference reference=FirebaseStorage.getInstance().getReferenceFromUrl(pdfUrl);
+    public static void loadpdfFromUrl(String pdfUrl, String pdfTitle, PDFView pdfView) {
+        String TAG = "LOAD_PDF_URL";
+        StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(pdfUrl);
         reference.getBytes(MAX_SIZE_PDF)
                 .addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -157,14 +155,14 @@ public class MyApplication extends Application {
                                     @Override
                                     public void onError(Throwable t) {
 //                                        Toast.makeText(context, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, "onError: "+t.getMessage());
+                                        Log.d(TAG, "onError: " + t.getMessage());
                                     }
                                 })
                                 .onPageError(new OnPageErrorListener() {
                                     @Override
                                     public void onPageError(int page, Throwable t) {
 //                                        Toast.makeText(context, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, "onPageError: "+t.getMessage());
+                                        Log.d(TAG, "onPageError: " + t.getMessage());
                                     }
                                 })
                                 .load();
@@ -173,22 +171,21 @@ public class MyApplication extends Application {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: "+e.getMessage());
+                        Log.d(TAG, "onFailure: " + e.getMessage());
                     }
                 });
 
     }
 
 
-
     public static void loadCategory(String categoryId, TextView categoryTv) {
 
-        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Categories");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Categories");
         ref.child(categoryId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String category=""+snapshot.child("category").getValue();
+                        String category = "" + snapshot.child("category").getValue();
                         categoryTv.setText(category);
                     }
 
@@ -202,24 +199,24 @@ public class MyApplication extends Application {
     }
 
 
-    public static void getBookViewCount(String bookId){
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Books");
+    public static void getBookViewCount(String bookId) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Books");
         ref.child(bookId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String viewsCount=""+snapshot.child("viewsCount").getValue();
+                        String viewsCount = "" + snapshot.child("viewsCount").getValue();
 
-                        if(viewsCount.equals("")||viewsCount.equals("null")){
-                            viewsCount="0";
+                        if (viewsCount.equals("") || viewsCount.equals("null")) {
+                            viewsCount = "0";
 
                         }
 
-                        long newViewsCount=Long.parseLong(viewsCount)+1;
+                        long newViewsCount = Long.parseLong(viewsCount) + 1;
 
-                        HashMap<String , Object>hashMap=new HashMap<>();
-                        hashMap.put("viewsCount",newViewsCount);
-                        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Books");
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("viewsCount", newViewsCount);
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Books");
                         reference.child(bookId)
                                 .updateChildren(hashMap);
 
@@ -233,6 +230,81 @@ public class MyApplication extends Application {
                 });
     }
 
+    public static void downloadBook(Context context, String BookId, String BookTitle, String BookUrl) {
+        String nameWithExt = BookTitle + ".pdf";
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("Please Wait!");
+        progressDialog.setMessage("Downloading " + nameWithExt + " ....");
+        progressDialog.show();
+        Log.d("DOWNLOADING_BOOK", "downloadBook: downloading");
+
+        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(BookUrl);
+        storageReference.getBytes(MAX_SIZE_PDF)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        saveDownloadedBook(context, progressDialog, bytes, nameWithExt, BookId);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Failed : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
+    }
+
+    private static void saveDownloadedBook(Context context, ProgressDialog progressDialog, byte[] bytes, String nameWithExt, String bookId) {
+
+        try {
+            File downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            downloads.mkdirs();
+            String filepath = downloads.getPath() + "/" + nameWithExt;
+
+
+            FileOutputStream out = new FileOutputStream(filepath);
+            out.write(bytes);
+            out.close();
+            Toast.makeText(context, "Saved To Downloads Folder", Toast.LENGTH_SHORT).show();
+
+            progressDialog.dismiss();
+
+//                incrementBookDownloadCount(bookId);
+
+        } catch (Exception e) {
+            Toast.makeText(context, "Faild due to : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+//    private static void incrementBookDownloadCount(String bookId) {
+//        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Books");
+//        ref.child(bookId)
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        String DownloadCount=""+snapshot.child("downloadCount").getValue();
+//                        if(DownloadCount.equals("")||DownloadCount.equals(null)){
+//                            DownloadCount=0;
+//                        }
+//
+//                        long newDownloadCount=Long.parseLong(DownloadCount)+1;
+//
+//
+//
+//                        HashMap<String, Object>hashMap=new HashMap<>();
+//                        hashMap.put("downloadsCount",newDownloadCount);
+//
+//
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//    }
 }

@@ -94,7 +94,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
         //load further details like category , pdf from url,pdf size in seperate function
         MyApplication.loadCategory(""+categoryId, holder.categoryTv);
 
-        MyApplication.loadpdfFromUrl(""+pdfUrl,""+title,holder.pdfView);
+//        MyApplication.loadpdfFromUrl(""+pdfUrl,""+title,holder.pdfView);
         MyApplication.loadSize(""+pdfUrl
         ,""+title
         ,holder.sizeTv);
@@ -190,7 +190,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
 
 
             //init variables
-            pdfView=binding.pdfView;
+//            pdfView=binding.pdfView;
 //            progressBar=binding.progressBar;
             titleTv=binding.titleTv;
             descriptionTv=binding.descriptionTv;
